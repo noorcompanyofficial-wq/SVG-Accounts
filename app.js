@@ -5,6 +5,7 @@ const path = require("path");
 const session = require("express-session");
 const db = require("./database/db");
 const customerRoutes = require("./routes/customers");
+const invoiceRoutes = require("./routes/invoices");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/customers", customerRoutes);
+app.use("/invoices", invoiceRoutes);
 
 app.get("/", (req, res) => {
   res.render("home", {

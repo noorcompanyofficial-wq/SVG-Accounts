@@ -14,8 +14,8 @@
 
       <nav>
         <a href="/dashboard">Dashboard</a>
-        <a href="/invoices">Invoices</a>
-        <a href="/customers" class="active">Customers</a>
+        <a href="/invoices" class="active">Invoices</a>
+        <a href="/customers">Customers</a>
         <a href="#">Expenses</a>
         <a href="#">Suppliers</a>
         <a href="#">Reports</a>
@@ -26,39 +26,38 @@
     <main class="dashboard">
       <header class="dashboard-header">
         <div>
-          <p class="eyebrow">People who buy from you</p>
-          <h1>Customers</h1>
+          <p class="eyebrow">Money owed to you</p>
+          <h1>Invoices</h1>
         </div>
-        <a href="/customers/new" class="btn primary">Add Customer</a>
+        <a href="/invoices/new" class="btn primary">Create Invoice</a>
       </header>
 
       <section class="panel">
-        <% if (customers.length === 0) { %>
-          <p class="muted">No customers yet. Add your first customer before creating invoices.</p>
+        <% if (invoices.length === 0) { %>
+          <p class="muted">No invoices yet. Create your first invoice to start tracking sales and VAT.</p>
         <% } else { %>
           <div class="table-wrap">
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Address</th>
+                  <th>Invoice</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Total</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <% customers.forEach(customer => { %>
+                <% invoices.forEach(invoice => { %>
                   <tr>
-                    <td><strong><%= customer.name %></strong></td>
-                    <td><%= customer.email || "-" %></td>
-                    <td><%= customer.phone || "-" %></td>
-                    <td><%= customer.address || "-" %></td>
+                    <td><strong><%= invoice.invoice_number %></strong></td>
+                    <td><%= invoice.customer_name || "-" %></td>
+                    <td><%= invoice.issue_date %></td>
+                    <td><span class="status-pill <%= invoice.status %>"><%= invoice.status %></span></td>
+                    <td><strong>£<%= Number(invoice.total).toFixed(2) %></strong></td>
                     <td class="actions-cell">
-                      <a href="/customers/<%= customer.id %>/edit" class="small-link">Edit</a>
-                      <form method="POST" action="/customers/<%= customer.id %>/delete" onsubmit="return confirm('Delete this customer?');">
-                        <button type="submit" class="danger-link">Delete</button>
-                      </form>
+                      <a href="/invoices/<%= invoice.id %>" class="small-link">View</a>
                     </td>
                   </tr>
                 <% }) %>

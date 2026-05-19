@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices" class="active">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="#">Expenses</a>
+        <a href="#">Suppliers</a>
+        <a href="#">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">New Invoice</p>
+          <h1>Create Invoice</h1>
+        </div>
+        <a href="/invoices" class="btn secondary">Back</a>
+      </header>
+
+      <section class="panel">
+        <% if (customers.length === 0) { %>
+          <p class="muted">You need to add a customer before creating an invoice.</p>
+          <a href="/customers/new" class="btn primary">Add Customer</a>
+        <% } else { %>
+          <form method="POST" action="/invoices/new" class="form-grid">
+            <label>
+              Invoice number
+              <input type="text" name="invoice_number" value="<%= invoiceNumber %>" required>
+            </label>
+
+            <label>
+              Customer
+              <select name="customer_id" required>
+                <option value="">Select customer</option>
+                <% customers.forEach(customer => { %>
+                  <option value="<%= customer.id %>"><%= customer.name %></option>
+                <% }) %>
+              </select>
+            </label>
+
+            <label>
+              Issue date
+              <input type="date" name="issue_date" required>
+            </label>
+
+            <label>
+              Due date
+              <input type="date" name="due_date">
+            </label>
+
+            <label class="wide">
+              Item/service description
+              <input type="text" name="description" placeholder="Example: Website design service" required>
+            </label>
+
+            <label>
+              Quantity
+              <input type="number" step="0.01" name="quantity" value="1" required>
+            </label>
+
+            <label>
+              Unit price
+              <input type="number" step="0.01" name="unit_price" value="0" required>
+            </label>
+
+            <label>
+              VAT rate %
+              <input type="number" step="0.01" name="vat_rate" value="20" required>
+            </label>
+
+            <label class="wide">
+              Notes
+              <input type="text" name="notes" placeholder="Payment terms or notes">
+            </label>
+
+            <div class="form-actions">
+              <button type="submit" class="btn primary">Save Invoice</button>
+            </div>
+          </form>
+        <% } %>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices" class="active">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="#">Expenses</a>
+        <a href="#">Suppliers</a>
+        <a href="#">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow"><%= invoice.status %></p>
+          <h1><%= invoice.invoice_number %></h1>
+        </div>
+        <div class="actions">
+          <a href="/invoices" class="btn secondary">Back</a>
+          <% if (invoice.status !== "paid") { %>
+            <form method="POST" action="/invoices/<%= invoice.id %>/mark-paid">
+              <button type="submit" class="btn primary">Mark Paid</button>
+            </form>
+          <% } %>
+        </div>
+      </header>
+
+      <section class="panel invoice-card">
+        <div class="invoice-top">
+          <div>
+            <p class="muted">Bill To</p>
+            <h2><%= invoice.customer_name || "-" %></h2>
+            <p><%= invoice.customer_email || "" %></p>
+            <p><%= invoice.customer_address || "" %></p>
+          </div>
+
+          <div class="invoice-meta">
+            <p><strong>Issue date:</strong> <%= invoice.issue_date %></p>
+            <p><strong>Due date:</strong> <%= invoice.due_date || "-" %></p>
+            <p><strong>Status:</strong> <span class="status-pill <%= invoice.status %>"><%= invoice.status %></span></p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit price</th>
+                <th>VAT</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% items.forEach(item => { %>
+                <tr>
+                  <td><%= item.description %></td>
+                  <td><%= item.quantity %></td>
+                  <td>£<%= Number(item.unit_price).toFixed(2) %></td>
+                  <td>£<%= Number(item.line_vat).toFixed(2) %></td>
+                  <td><strong>£<%= Number(item.line_total).toFixed(2) %></strong></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="invoice-totals">
+          <p>Subtotal: <strong>£<%= Number(invoice.subtotal).toFixed(2) %></strong></p>
+          <p>VAT: <strong>£<%= Number(invoice.vat_total).toFixed(2) %></strong></p>
+          <h2>Total: £<%= Number(invoice.total).toFixed(2) %></h2>
+        </div>
+
+        <% if (invoice.notes) { %>
+          <div class="invoice-notes">
+            <strong>Notes:</strong>
+            <p><%= invoice.notes %></p>
+          </div>
+        <% } %>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

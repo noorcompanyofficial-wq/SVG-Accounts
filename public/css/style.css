@@ -301,3 +301,81 @@ a {
 .danger-link {
   color: #dc2626;
 }
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: capitalize;
+  background: #e5e7eb;
+  color: #334155;
+}
+
+.status-pill.sent {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-pill.paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-pill.draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.invoice-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.invoice-top h2 {
+  margin: 0 0 8px;
+}
+
+.invoice-meta {
+  text-align: right;
+}
+
+.invoice-totals {
+  margin-top: 24px;
+  margin-left: auto;
+  max-width: 300px;
+  text-align: right;
+}
+
+.invoice-totals p {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.invoice-notes {
+  margin-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .invoice-top {
+    flex-direction: column;
+  }
+
+  .invoice-meta {
+    text-align: left;
+  }
+
+  .wide {
+    grid-column: auto;
+  }
+}
