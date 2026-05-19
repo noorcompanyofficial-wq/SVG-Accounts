@@ -44,6 +44,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Routes
+app.use("/customers", customerRoutes);
+
 app.get("/", (req, res) => {
   res.render("home", {
     title: APP_NAME,
@@ -58,7 +61,7 @@ app.get("/dashboard", (req, res) => {
     sales: db.prepare("SELECT COALESCE(SUM(total), 0) AS total FROM invoices WHERE status != 'draft'").get().total,
     expenses: db.prepare("SELECT COALESCE(SUM(total), 0) AS total FROM expenses").get().total,
     vatOnSales: db.prepare("SELECT COALESCE(SUM(vat_total), 0) AS total FROM invoices WHERE status != 'draft'").get().total,
-    vatOnExpenses: db.prepare("SELECT COALESCE(SUM(vat_total), 0) AS total FROM expenses").get().total
+    vatOnExpenses: db.prepare("SELECT COALESCE(SUM(vat_total), 0) AS total FROM expenses").get().total,
   };
 
   totals.estimatedVat = totals.vatOnSales - totals.vatOnExpenses;
@@ -68,7 +71,7 @@ app.get("/dashboard", (req, res) => {
     title: `Dashboard | ${APP_NAME}`,
     appName: APP_NAME,
     company,
-    totals
+    totals,
   });
 });
 
@@ -78,7 +81,7 @@ app.get("/settings", (req, res) => {
   res.render("settings", {
     title: `Settings | ${APP_NAME}`,
     appName: APP_NAME,
-    company
+    company,
   });
 });
 
@@ -93,7 +96,7 @@ app.post("/settings", (req, res) => {
     postcode,
     country,
     vat_registered,
-    default_vat_rate
+    default_vat_rate,
   } = req.body;
 
   const company = db.prepare("SELECT * FROM companies ORDER BY id LIMIT 1").get();

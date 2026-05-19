@@ -51,9 +51,9 @@
                 <% customers.forEach(customer => { %>
                   <tr>
                     <td><strong><%= customer.name %></strong></td>
-                    <td><%= customer.email || '-' %></td>
-                    <td><%= customer.phone || '-' %></td>
-                    <td><%= customer.address || '-' %></td>
+                    <td><%= customer.email || "-" %></td>
+                    <td><%= customer.phone || "-" %></td>
+                    <td><%= customer.address || "-" %></td>
                     <td class="actions-cell">
                       <a href="/customers/<%= customer.id %>/edit" class="small-link">Edit</a>
                       <form method="POST" action="/customers/<%= customer.id %>/delete" onsubmit="return confirm('Delete this customer?');">
