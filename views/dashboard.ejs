@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard" class="active">Dashboard</a>
+        <a href="#">Invoices</a>
+        <a href="#">Customers</a>
+        <a href="#">Expenses</a>
+        <a href="#">Suppliers</a>
+        <a href="#">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow"><%= company.name %></p>
+          <h1>Dashboard</h1>
+        </div>
+        <button class="btn primary">Create Invoice</button>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <p>Total Sales</p>
+          <h2>£<%= Number(totals.sales).toFixed(2) %></h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Total Expenses</p>
+          <h2>£<%= Number(totals.expenses).toFixed(2) %></h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Estimated VAT</p>
+          <h2>£<%= Number(totals.estimatedVat).toFixed(2) %></h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Profit</p>
+          <h2>£<%= Number(totals.profit).toFixed(2) %></h2>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Guided Accounting Mode</h2>
+        <p class="muted">
+          You enter normal business actions like invoices and expenses. SVG Accounts handles the accounting records behind the scenes.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

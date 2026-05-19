@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="#">Invoices</a>
+        <a href="/customers" class="active">Customers</a>
+        <a href="#">Expenses</a>
+        <a href="#">Suppliers</a>
+        <a href="#">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">People who buy from you</p>
+          <h1>Customers</h1>
+        </div>
+        <a href="/customers/new" class="btn primary">Add Customer</a>
+      </header>
+
+      <section class="panel">
+        <% if (customers.length === 0) { %>
+          <p class="muted">No customers yet. Add your first customer before creating invoices.</p>
+        <% } else { %>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Address</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% customers.forEach(customer => { %>
+                  <tr>
+                    <td><strong><%= customer.name %></strong></td>
+                    <td><%= customer.email || '-' %></td>
+                    <td><%= customer.phone || '-' %></td>
+                    <td><%= customer.address || '-' %></td>
+                    <td class="actions-cell">
+                      <a href="/customers/<%= customer.id %>/edit" class="small-link">Edit</a>
+                      <form method="POST" action="/customers/<%= customer.id %>/delete" onsubmit="return confirm('Delete this customer?');">
+                        <button type="submit" class="danger-link">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
