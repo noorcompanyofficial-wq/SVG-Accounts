@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="/expenses" class="active">Expenses</a>
+        <a href="#">Suppliers</a>
+        <a href="#">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Expense</p>
+          <h1><%= expense.description %></h1>
+        </div>
+        <a href="/expenses" class="btn secondary">Back</a>
+      </header>
+
+      <section class="panel">
+        <div class="invoice-top">
+          <div>
+            <p class="muted">Supplier</p>
+            <h2><%= expense.supplier_name || "No supplier selected" %></h2>
+            <p><strong>Category:</strong> <%= expense.category_name || "-" %></p>
+            <p><strong>Date:</strong> <%= expense.expense_date %></p>
+            <p><strong>Paid from:</strong> <%= expense.paid_from %></p>
+          </div>
+
+          <div class="invoice-meta">
+            <p>Subtotal: <strong>£<%= Number(expense.subtotal).toFixed(2) %></strong></p>
+            <p>VAT reclaimable: <strong>£<%= Number(expense.vat_total).toFixed(2) %></strong></p>
+            <h2>Total: £<%= Number(expense.total).toFixed(2) %></h2>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

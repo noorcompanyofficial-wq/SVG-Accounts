@@ -14,9 +14,9 @@
 
       <nav>
         <a href="/dashboard">Dashboard</a>
-        <a href="/invoices" class="active">Invoices</a>
+        <a href="/invoices">Invoices</a>
         <a href="/customers">Customers</a>
-        <a href="/expenses">Expenses</a>
+        <a href="/expenses" class="active">Expenses</a>
         <a href="#">Suppliers</a>
         <a href="#">Reports</a>
         <a href="/settings">Settings</a>
@@ -26,38 +26,40 @@
     <main class="dashboard">
       <header class="dashboard-header">
         <div>
-          <p class="eyebrow">Money owed to you</p>
-          <h1>Invoices</h1>
+          <p class="eyebrow">Money spent by the business</p>
+          <h1>Expenses</h1>
         </div>
-        <a href="/invoices/new" class="btn primary">Create Invoice</a>
+        <a href="/expenses/new" class="btn primary">Add Expense</a>
       </header>
 
       <section class="panel">
-        <% if (invoices.length === 0) { %>
-          <p class="muted">No invoices yet. Create your first invoice to start tracking sales and VAT.</p>
+        <% if (expenses.length === 0) { %>
+          <p class="muted">No expenses yet. Add your first expense to track costs and VAT reclaimable.</p>
         <% } else { %>
           <div class="table-wrap">
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Invoice</th>
-                  <th>Customer</th>
                   <th>Date</th>
-                  <th>Status</th>
+                  <th>Description</th>
+                  <th>Supplier</th>
+                  <th>Category</th>
+                  <th>VAT</th>
                   <th>Total</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <% invoices.forEach(invoice => { %>
+                <% expenses.forEach(expense => { %>
                   <tr>
-                    <td><strong><%= invoice.invoice_number %></strong></td>
-                    <td><%= invoice.customer_name || "-" %></td>
-                    <td><%= invoice.issue_date %></td>
-                    <td><span class="status-pill <%= invoice.status %>"><%= invoice.status %></span></td>
-                    <td><strong>£<%= Number(invoice.total).toFixed(2) %></strong></td>
+                    <td><%= expense.expense_date %></td>
+                    <td><strong><%= expense.description %></strong></td>
+                    <td><%= expense.supplier_name || "-" %></td>
+                    <td><%= expense.category_name || "-" %></td>
+                    <td>£<%= Number(expense.vat_total).toFixed(2) %></td>
+                    <td><strong>£<%= Number(expense.total).toFixed(2) %></strong></td>
                     <td class="actions-cell">
-                      <a href="/invoices/<%= invoice.id %>" class="small-link">View</a>
+                      <a href="/expenses/<%= expense.id %>" class="small-link">View</a>
                     </td>
                   </tr>
                 <% }) %>
