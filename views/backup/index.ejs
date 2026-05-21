@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="/expenses">Expenses</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/reports">Reports</a>
+        <a href="/exports">Exports</a>
+        <a href="/backup" class="active">Backup</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Protect your accounting data</p>
+          <h1>Backup & Restore</h1>
+        </div>
+      </header>
+
+      <section class="report-grid">
+        <div class="panel">
+          <h2>Download Backup</h2>
+          <p class="muted">
+            Download a copy of your local SQLite database. Keep it somewhere safe, like an external drive or secure cloud storage.
+          </p>
+
+          <a href="/backup/download" class="btn primary">Download Database Backup</a>
+        </div>
+
+        <div class="panel">
+          <h2>Restore Backup</h2>
+          <p class="muted">
+            Restore a previous database backup. This will replace your current database after saving a safety copy.
+          </p>
+
+          <form method="POST" action="/backup/restore" enctype="multipart/form-data" class="backup-form">
+            <label>
+              Choose backup file
+              <input type="file" name="backup_file" accept=".sqlite,.db" required>
+            </label>
+
+            <button type="submit" class="btn danger" onclick="return confirm('This will replace your current database. Continue?');">
+              Restore Backup
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Backup advice</h2>
+        <p class="muted">
+          Because SVG Accounts is offline, your data lives on this computer. Download a backup regularly, especially before updating the software.
+        </p>
+
+        <div class="report-line">
+          <span>Recommended backup frequency</span>
+          <strong>Daily or weekly</strong>
+        </div>
+
+        <div class="report-line">
+          <span>Backup file type</span>
+          <strong>.sqlite</strong>
+        </div>
+
+        <div class="report-line">
+          <span>Database location</span>
+          <strong>database/svg_accounts.sqlite</strong>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
