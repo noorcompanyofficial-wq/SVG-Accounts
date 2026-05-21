@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="/expenses">Expenses</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/reports" class="active">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Advanced View</p>
+          <h1>Accounting Entries</h1>
+        </div>
+        <a href="/reports" class="btn secondary">Back to Reports</a>
+      </header>
+
+      <section class="panel">
+        <p class="muted">
+          This is the hidden accounting layer. Normal users do not need to touch this, but it helps an accountant review the records.
+        </p>
+
+        <% if (entries.length === 0) { %>
+          <p class="muted">No accounting entries yet.</p>
+        <% } else { %>
+          <% entries.forEach(entry => { %>
+            <div class="journal-card">
+              <div class="journal-head">
+                <div>
+                  <strong><%= entry.description %></strong>
+                  <p class="muted"><%= entry.entry_date %> · <%= entry.source_type %></p>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Account</th>
+                      <th>Debit</th>
+                      <th>Credit</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% (groupedLines[entry.id] || []).forEach(line => { %>
+                      <tr>
+                        <td><%= line.account_code %> - <%= line.account_name %></td>
+                        <td>£<%= Number(line.debit).toFixed(2) %></td>
+                        <td>£<%= Number(line.credit).toFixed(2) %></td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <% }) %>
+        <% } %>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

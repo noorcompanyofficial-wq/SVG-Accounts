@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="/expenses">Expenses</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/reports" class="active">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Business performance</p>
+          <h1>Reports</h1>
+        </div>
+        <a href="/reports/journal" class="btn secondary">Accounting Entries</a>
+      </header>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <p>Sales before VAT</p>
+          <h2>£<%= Number(sales.subtotal).toFixed(2) %></h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Expenses before VAT</p>
+          <h2>£<%= Number(expenses.subtotal).toFixed(2) %></h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Net Profit</p>
+          <h2>£<%= Number(netProfit).toFixed(2) %></h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Estimated VAT Due</p>
+          <h2>£<%= Number(vatDue).toFixed(2) %></h2>
+        </div>
+      </section>
+
+      <section class="report-grid">
+        <div class="panel">
+          <h2>Profit & Loss</h2>
+
+          <div class="report-line">
+            <span>Sales</span>
+            <strong>£<%= Number(sales.subtotal).toFixed(2) %></strong>
+          </div>
+
+          <div class="report-line">
+            <span>Expenses</span>
+            <strong>£<%= Number(expenses.subtotal).toFixed(2) %></strong>
+          </div>
+
+          <div class="report-total">
+            <span>Net Profit</span>
+            <strong>£<%= Number(netProfit).toFixed(2) %></strong>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>VAT Summary</h2>
+
+          <div class="report-line">
+            <span>VAT on Sales</span>
+            <strong>£<%= Number(sales.vat).toFixed(2) %></strong>
+          </div>
+
+          <div class="report-line">
+            <span>VAT on Expenses</span>
+            <strong>£<%= Number(expenses.vat).toFixed(2) %></strong>
+          </div>
+
+          <div class="report-total">
+            <span>Estimated VAT Due</span>
+            <strong>£<%= Number(vatDue).toFixed(2) %></strong>
+          </div>
+
+          <p class="muted small-warning">
+            This is an estimate only. Final VAT should be checked before submission.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Expense Breakdown</h2>
+
+        <% if (expenseBreakdown.length === 0) { %>
+          <p class="muted">No expenses recorded yet.</p>
+        <% } else { %>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% expenseBreakdown.forEach(row => { %>
+                  <tr>
+                    <td><%= row.category_name || "Uncategorised" %></td>
+                    <td><strong>£<%= Number(row.total).toFixed(2) %></strong></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </section>
+
+      <section class="panel">
+        <h2>Unpaid Invoices</h2>
+
+        <% if (unpaidInvoices.length === 0) { %>
+          <p class="muted">No unpaid invoices.</p>
+        <% } else { %>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Customer</th>
+                  <th>Due date</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% unpaidInvoices.forEach(invoice => { %>
+                  <tr>
+                    <td><strong><%= invoice.invoice_number %></strong></td>
+                    <td><%= invoice.customer_name || "-" %></td>
+                    <td><%= invoice.due_date || "-" %></td>
+                    <td><span class="status-pill <%= invoice.status %>"><%= invoice.status %></span></td>
+                    <td><strong>£<%= Number(invoice.total).toFixed(2) %></strong></td>
+                    <td class="actions-cell">
+                      <a href="/invoices/<%= invoice.id %>" class="small-link">View</a>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
