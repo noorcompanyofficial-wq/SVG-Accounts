@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../database/db");
+const generateInvoicePdf = require("../utils/invoicePdf");
 
 const APP_NAME = process.env.APP_NAME || "SVG Accounts";
 
@@ -167,6 +168,37 @@ router.get("/:id", (req, res) => {
     invoice,
     items
   });
+});
+
+
+router.get("/:id/pdf", (req, res) => {
+  const invoice = db.prepare(`
+    SELECT invoices.*,
+           customers.name AS customer_name,
+           customers.email AS customer_email,
+           customers.address AS customer_address
+    FROM invoices
+    LEFT JOIN customers ON customers.id = invoices.customer_id
+    WHERE invoices.id = ?
+  `).get(req.params.id);
+
+  if (!invoice) {
+    return res.status(404).send("Invoice not found");
+  }
+
+  const items = db.prepare("SELECT * FROM invoice_items WHERE invoice_id = ?").all(req.params.id);
+  const company = db.prepare("SELECT * FROM companies ORDER BY id LIMIT 1").get();
+
+  const doc = generateInvoicePdf({ invoice, items, company });
+
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${invoice.invoice_number}.pdf"`
+  );
+
+  doc.pipe(res);
+  doc.end();
 });
 
 router.post("/:id/mark-paid", (req, res) => {
