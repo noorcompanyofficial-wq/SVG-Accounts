@@ -430,3 +430,41 @@ a {
   background: #dc2626;
   color: white;
 }
+
+.export-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.export-card {
+  display: grid;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  background: #f8fafc;
+  transition: 0.2s ease;
+}
+
+.export-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.export-card strong {
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.export-card span {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .export-grid {
+    grid-template-columns: 1fr;
+  }
+}

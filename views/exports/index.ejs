@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="/expenses">Expenses</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/reports">Reports</a>
+        <a href="/exports" class="active">Exports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Accountant-friendly exports</p>
+          <h1>Exports</h1>
+        </div>
+      </header>
+
+      <section class="panel">
+        <h2>Download CSV Files</h2>
+        <p class="muted">
+          Export your records as CSV files. You can open them in Excel, Google Sheets, Numbers, or send them to your accountant.
+        </p>
+
+        <div class="export-grid">
+          <a href="/exports/invoices.csv" class="export-card">
+            <strong>Invoices CSV</strong>
+            <span>Sales, VAT, status, customer and payment totals.</span>
+          </a>
+
+          <a href="/exports/expenses.csv" class="export-card">
+            <strong>Expenses CSV</strong>
+            <span>Costs, VAT reclaimable, supplier and category.</span>
+          </a>
+
+          <a href="/exports/customers.csv" class="export-card">
+            <strong>Customers CSV</strong>
+            <span>Customer names, emails, phone numbers and addresses.</span>
+          </a>
+
+          <a href="/exports/suppliers.csv" class="export-card">
+            <strong>Suppliers CSV</strong>
+            <span>Supplier names, emails, phone numbers and addresses.</span>
+          </a>
+
+          <a href="/exports/journal.csv" class="export-card">
+            <strong>Accounting Entries CSV</strong>
+            <span>Advanced debit and credit journal lines for accountant review.</span>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
