@@ -30,6 +30,10 @@
           <h1><%= expense.description %></h1>
         </div>
         <a href="/expenses" class="btn secondary">Back</a>
+        <a href="/expenses/<%= expense.id %>/edit" class="btn secondary">Edit</a>
+        <form method="POST" action="/expenses/<%= expense.id %>/delete" onsubmit="return confirm('Delete this expense?');">
+          <button type="submit" class="btn danger">Delete</button>
+        </form>
       </header>
 
       <section class="panel">
