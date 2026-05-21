@@ -15,9 +15,9 @@
       <nav>
         <a href="/dashboard">Dashboard</a>
         <a href="/invoices">Invoices</a>
-        <a href="/customers" class="active">Customers</a>
+        <a href="/customers">Customers</a>
         <a href="/expenses">Expenses</a>
-        <a href="/suppliers">Suppliers</a>
+        <a href="/suppliers" class="active">Suppliers</a>
         <a href="#">Reports</a>
         <a href="/settings">Settings</a>
       </nav>
@@ -26,15 +26,15 @@
     <main class="dashboard">
       <header class="dashboard-header">
         <div>
-          <p class="eyebrow">People who buy from you</p>
-          <h1>Customers</h1>
+          <p class="eyebrow">People or companies you buy from</p>
+          <h1>Suppliers</h1>
         </div>
-        <a href="/customers/new" class="btn primary">Add Customer</a>
+        <a href="/suppliers/new" class="btn primary">Add Supplier</a>
       </header>
 
       <section class="panel">
-        <% if (customers.length === 0) { %>
-          <p class="muted">No customers yet. Add your first customer before creating invoices.</p>
+        <% if (suppliers.length === 0) { %>
+          <p class="muted">No suppliers yet. Add suppliers for rent, stock, software, postage or services.</p>
         <% } else { %>
           <div class="table-wrap">
             <table class="data-table">
@@ -48,15 +48,15 @@
                 </tr>
               </thead>
               <tbody>
-                <% customers.forEach(customer => { %>
+                <% suppliers.forEach(supplier => { %>
                   <tr>
-                    <td><strong><%= customer.name %></strong></td>
-                    <td><%= customer.email || "-" %></td>
-                    <td><%= customer.phone || "-" %></td>
-                    <td><%= customer.address || "-" %></td>
+                    <td><strong><%= supplier.name %></strong></td>
+                    <td><%= supplier.email || "-" %></td>
+                    <td><%= supplier.phone || "-" %></td>
+                    <td><%= supplier.address || "-" %></td>
                     <td class="actions-cell">
-                      <a href="/customers/<%= customer.id %>/edit" class="small-link">Edit</a>
-                      <form method="POST" action="/customers/<%= customer.id %>/delete" onsubmit="return confirm('Delete this customer?');">
+                      <a href="/suppliers/<%= supplier.id %>/edit" class="small-link">Edit</a>
+                      <form method="POST" action="/suppliers/<%= supplier.id %>/delete" onsubmit="return confirm('Delete this supplier?');">
                         <button type="submit" class="danger-link">Delete</button>
                       </form>
                     </td>

@@ -15,9 +15,9 @@
       <nav>
         <a href="/dashboard">Dashboard</a>
         <a href="/invoices">Invoices</a>
-        <a href="/customers" class="active">Customers</a>
+        <a href="/customers">Customers</a>
         <a href="/expenses">Expenses</a>
-        <a href="/suppliers">Suppliers</a>
+        <a href="/suppliers" class="active">Suppliers</a>
         <a href="#">Reports</a>
         <a href="/settings">Settings</a>
       </nav>
@@ -26,16 +26,16 @@
     <main class="dashboard">
       <header class="dashboard-header">
         <div>
-          <p class="eyebrow">New Customer</p>
-          <h1>Add Customer</h1>
+          <p class="eyebrow">New Supplier</p>
+          <h1>Add Supplier</h1>
         </div>
-        <a href="/customers" class="btn secondary">Back</a>
+        <a href="/suppliers" class="btn secondary">Back</a>
       </header>
 
       <section class="panel">
-        <form method="POST" action="/customers/new" class="form-grid">
+        <form method="POST" action="/suppliers/new" class="form-grid">
           <label>
-            Customer name
+            Supplier name
             <input type="text" name="name" required>
           </label>
 
@@ -55,7 +55,7 @@
           </label>
 
           <div class="form-actions">
-            <button type="submit" class="btn primary">Save Customer</button>
+            <button type="submit" class="btn primary">Save Supplier</button>
           </div>
         </form>
       </section>
