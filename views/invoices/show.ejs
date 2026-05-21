@@ -33,6 +33,12 @@
           <a href="/invoices" class="btn secondary">Back</a>
           <a href="/invoices/<%= invoice.id %>/pdf" class="btn secondary">Download PDF</a>
           <% if (invoice.status !== "paid") { %>
+            <a href="/invoices/<%= invoice.id %>/edit" class="btn secondary">Edit</a>
+            <form method="POST" action="/invoices/<%= invoice.id %>/delete" onsubmit="return confirm('Delete this invoice?');">
+              <button type="submit" class="btn danger">Delete</button>
+            </form>
+          <% } %>
+          <% if (invoice.status !== "paid") { %>
             <form method="POST" action="/invoices/<%= invoice.id %>/mark-paid">
               <button type="submit" class="btn primary">Mark Paid</button>
             </form>

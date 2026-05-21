@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <h2><%= appName %></h2>
+      <p class="local-pill">Offline Private</p>
+
+      <nav>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/invoices" class="active">Invoices</a>
+        <a href="/customers">Customers</a>
+        <a href="/expenses">Expenses</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/reports">Reports</a>
+        <a href="/settings">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Edit Invoice</p>
+          <h1><%= invoice.invoice_number %></h1>
+        </div>
+        <a href="/invoices/<%= invoice.id %>" class="btn secondary">Back</a>
+      </header>
+
+      <section class="panel">
+        <form method="POST" action="/invoices/<%= invoice.id %>/edit" class="form-grid">
+          <label>
+            Invoice number
+            <input type="text" name="invoice_number" value="<%= invoice.invoice_number %>" required>
+          </label>
+
+          <label>
+            Customer
+            <select name="customer_id" required>
+              <% customers.forEach(customer => { %>
+                <option value="<%= customer.id %>" <%= Number(invoice.customer_id) === Number(customer.id) ? "selected" : "" %>>
+                  <%= customer.name %>
+                </option>
+              <% }) %>
+            </select>
+          </label>
+
+          <label>
+            Issue date
+            <input type="date" name="issue_date" value="<%= invoice.issue_date %>" required>
+          </label>
+
+          <label>
+            Due date
+            <input type="date" name="due_date" value="<%= invoice.due_date || '' %>">
+          </label>
+
+          <label class="wide">
+            Item/service description
+            <input type="text" name="description" value="<%= item.description || '' %>" required>
+          </label>
+
+          <label>
+            Quantity
+            <input type="number" step="0.01" name="quantity" value="<%= item.quantity || 1 %>" required>
+          </label>
+
+          <label>
+            Unit price
+            <input type="number" step="0.01" name="unit_price" value="<%= item.unit_price || 0 %>" required>
+          </label>
+
+          <label>
+            VAT rate %
+            <input type="number" step="0.01" name="vat_rate" value="<%= item.vat_rate || 20 %>" required>
+          </label>
+
+          <label class="wide">
+            Notes
+            <input type="text" name="notes" value="<%= invoice.notes || '' %>">
+          </label>
+
+          <div class="form-actions">
+            <button type="submit" class="btn primary">Update Invoice</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -425,3 +425,8 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+.btn.danger {
+  background: #dc2626;
+  color: white;
+}
